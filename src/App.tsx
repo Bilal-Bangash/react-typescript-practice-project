@@ -4,31 +4,23 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom'
-import firebase from 'firebase/app'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import 'firebase/auth'
+import { getCurrentUserAuthenticationStatus } from './firebase/authService'
 import { Home, SignIn } from './pages'
-import { firebaseConfig } from './configs'
+import { SIGN_IN_ROUTE } from './constants'
 import './App.css'
 
-firebase.initializeApp(firebaseConfig)
-
-const auth = firebase.auth()
 function App() {
-  const [user] = useAuthState(auth)
-
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route
-            exact
-            path="/sign-in"
-            component={() => <SignIn firebase={firebase} auth={auth} />}
-          />
+          <Route exact path={SIGN_IN_ROUTE} component={() => <SignIn />} />
           {/* Need to add protected Route */}
-          {user && <Route exact path="/home" component={Home} />}
-          <Redirect from="/" to="/sign-in" />
+          {getCurrentUserAuthenticationStatus() ? (
+            <Route exact path="/" component={Home} />
+          ) : (
+            <Redirect from="/" to={SIGN_IN_ROUTE} />
+          )}
         </Switch>
       </Router>
     </div>

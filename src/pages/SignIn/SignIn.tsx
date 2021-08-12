@@ -1,4 +1,5 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   Avatar,
   Button,
@@ -6,16 +7,24 @@ import {
   Typography,
   Container,
 } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import { getCurrentUserAuthenticationStatus } from '../../firebase/authService'
+import { userLogin } from '../../redux'
 import { signInStyles } from './SignIn.styles'
 import { SignInProps } from './SignIn.interface'
-
-const SignIn: FC<SignInProps> = ({ firebase, auth }) => {
+const SignIn: FC<SignInProps> = () => {
   const classes = signInStyles()
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const userLoginDetail = useSelector((state) => state)
+
+  useEffect(() => {
+    userLoginDetail && getCurrentUserAuthenticationStatus() && history.push('/')
+  }, [userLoginDetail, history])
 
   const handleSignInClick = () => {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    auth.signInWithPopup(provider)
+    dispatch(userLogin())
   }
 
   return (
