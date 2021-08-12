@@ -1,6 +1,10 @@
 import React from 'react'
 import { Button, Container, Paper } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Typography, Dropdown } from '../../components'
+import { SIGN_IN_ROUTE } from '../../constants'
+import { userLogout } from '../../redux'
 import { homeStyles } from './Home.styles'
 import { levels } from './Home.constant'
 
@@ -8,6 +12,8 @@ interface HomeProps {}
 
 const Home: React.FC<HomeProps> = () => {
   const classes = homeStyles()
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   const [level, setLevel] = React.useState<string>('')
 
@@ -15,6 +21,11 @@ const Home: React.FC<HomeProps> = () => {
     target: { value },
   }) => {
     setLevel(value)
+  }
+
+  const handleSignOut = () => {
+    dispatch(userLogout())
+    history.push(SIGN_IN_ROUTE)
   }
   return (
     <React.Fragment>
@@ -36,6 +47,10 @@ const Home: React.FC<HomeProps> = () => {
           />
           <Button variant="contained" color="primary">
             Start
+          </Button>
+          <br />
+          <Button variant="contained" color="secondary" onClick={handleSignOut}>
+            SignOut
           </Button>
         </Paper>
       </Container>

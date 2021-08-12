@@ -1,4 +1,1 @@
-export interface SignInProps {
-  firebase: any
-  auth: any
-}
+export interface SignInProps {}
