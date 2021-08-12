@@ -13,7 +13,7 @@ import { SignInProps } from './SignIn.interface'
 const SignIn: FC<SignInProps> = ({ firebase, auth }) => {
   const classes = signInStyles()
 
-  const signInWithGoogle = () => {
+  const handleSignInClick = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     auth.signInWithPopup(provider)
   }
@@ -34,7 +34,7 @@ const SignIn: FC<SignInProps> = ({ firebase, auth }) => {
           variant="contained"
           color="primary"
           className={classes.submit}
-          onClick={signInWithGoogle}
+          onClick={handleSignInClick}
         >
           Sign In With Google
         </Button>
