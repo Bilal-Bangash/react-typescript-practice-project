@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import {
   Avatar,
   Button,
@@ -7,9 +8,15 @@ import {
 } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { signInStyles } from './SignIn.styles'
+import { SignInProps } from './SignIn.interface'
 
-const SignIn = () => {
+const SignIn: FC<SignInProps> = ({ firebase, auth }) => {
   const classes = signInStyles()
+
+  const signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    auth.signInWithPopup(provider)
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -27,6 +34,7 @@ const SignIn = () => {
           variant="contained"
           color="primary"
           className={classes.submit}
+          onClick={signInWithGoogle}
         >
           Sign In With Google
         </Button>
