@@ -1,7 +1,10 @@
 import { useState, ChangeEventHandler, Fragment, FC } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Button, Container, Paper, Grid } from '@material-ui/core'
 
 import { Typography, Dropdown } from '../../components'
+import { startTest } from '../../redux'
 import { homeStyles } from './Home.styles'
 import { levels } from './Home.constant'
 
@@ -9,13 +12,19 @@ interface HomeProps {}
 
 const Home: FC<HomeProps> = () => {
   const classes = homeStyles()
-
+  const dispatch = useDispatch()
+  const history = useHistory()
   const [level, setLevel] = useState<string>('')
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
   }) => {
     setLevel(value)
+    dispatch(startTest(value))
+  }
+
+  const handleStartClick = () => {
+    history.push('typing-test')
   }
 
   return (
@@ -48,7 +57,12 @@ const Home: FC<HomeProps> = () => {
             </Grid>
 
             <Grid item xs={12} md={7}>
-              <Button variant="contained" color="primary" fullWidth>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleStartClick}
+                fullWidth
+              >
                 Start
               </Button>
             </Grid>

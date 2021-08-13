@@ -1,14 +1,14 @@
 export const levels = [
   {
-    optionValue: 1,
+    optionValue: 'beginner',
     optionLabel: 'Beginner',
   },
   {
-    optionValue: 2,
+    optionValue: 'intermediate',
     optionLabel: 'Intermediate',
   },
   {
-    optionValue: 3,
+    optionValue: 'advanced',
     optionLabel: 'Advanced',
   },
 ]

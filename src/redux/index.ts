@@ -1,1 +1,1 @@
-export { userLogin, userLogout } from './actions'
+export { userLogin, userLogout, startTest } from './actions'

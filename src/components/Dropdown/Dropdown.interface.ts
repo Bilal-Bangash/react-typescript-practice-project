@@ -1,6 +1,6 @@
 interface DropdownOptionObj {
   optionLabel: string
-  optionValue: number
+  optionValue: string
 }
 
 export interface DropdownProps {

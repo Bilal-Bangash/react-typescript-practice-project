@@ -15,5 +15,10 @@ export const appBarStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'space-between',
     },
+    userImg: {
+      border: '1px solid black',
+      borderRadius: '50%',
+      width: '50px',
+    },
   }),
 )

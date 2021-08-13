@@ -21,4 +21,10 @@ export const typingStyles = makeStyles(({ palette }) => ({
     fontSize: '20px',
     height: '16px',
   },
+  testParagraph: {
+    border: '1px solid lightgrey',
+    borderRadius: '6px',
+    margin: '6px',
+    textAlign: 'left',
+  },
 }))
