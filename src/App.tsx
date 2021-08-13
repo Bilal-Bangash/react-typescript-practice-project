@@ -15,6 +15,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path={SIGN_IN_ROUTE} component={() => <SignIn />} />
+          <Route exact path="/home" component={Home} />
           {/* Need to add protected Route */}
           {getCurrentUserAuthenticationStatus() ? (
             <Route exact path="/" component={Home} />
