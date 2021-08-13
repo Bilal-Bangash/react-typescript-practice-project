@@ -1,6 +1,6 @@
 import React, { FC, Fragment, useState } from 'react'
 import { AppBar, Toolbar, IconButton, MenuItem, Menu } from '@material-ui/core'
-// import { useSelector } from 'react-redux'
+
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { appBarStyles } from './AppBar.styles'
@@ -11,6 +11,7 @@ export interface MenuAppBarProps {
 
 const MenuAppBar: FC<MenuAppBarProps> = ({ handleClick }) => {
   // const userLogin = useSelector((state) => state.userLogin)
+
   const classes = appBarStyles()
   const [auth] = useState(true)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
