@@ -1,10 +1,7 @@
 import { useState, ChangeEventHandler, Fragment, FC } from 'react'
 import { Button, Container, Paper, Grid } from '@material-ui/core'
-import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { Typography, Dropdown, AppBar } from '../../components'
-import { SIGN_IN_ROUTE } from '../../constants'
-import { userLogout } from '../../redux'
+
+import { Typography, Dropdown } from '../../components'
 import { homeStyles } from './Home.styles'
 import { levels } from './Home.constant'
 
@@ -12,8 +9,6 @@ interface HomeProps {}
 
 const Home: FC<HomeProps> = () => {
   const classes = homeStyles()
-  const dispatch = useDispatch()
-  const history = useHistory()
 
   const [level, setLevel] = useState<string>('')
 
@@ -23,13 +18,8 @@ const Home: FC<HomeProps> = () => {
     setLevel(value)
   }
 
-  const handleSignOut = () => {
-    dispatch(userLogout())
-    history.push(SIGN_IN_ROUTE)
-  }
   return (
     <Fragment>
-      <AppBar handleClick={handleSignOut} />
       <Container fixed>
         <Paper elevation={3} className={classes.paper}>
           <Grid
