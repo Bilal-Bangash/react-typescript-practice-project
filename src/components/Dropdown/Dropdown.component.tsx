@@ -3,11 +3,21 @@ import { InputLabel, FormControl, Select } from '@material-ui/core'
 import { dropDownStyles } from './Dropdown.styles'
 import { DropdownProps } from './Dropdown.interface'
 
-const Dropdown: FC<DropdownProps> = ({ label, value, onChange, options }) => {
+const Dropdown: FC<DropdownProps> = ({
+  label,
+  value,
+  onChange,
+  options,
+  fullWidth,
+}) => {
   const classes = dropDownStyles()
   return (
-    <div>
-      <FormControl variant="outlined" className={classes.formControl}>
+    <>
+      <FormControl
+        variant="outlined"
+        className={classes.formControl}
+        fullWidth={fullWidth}
+      >
         <InputLabel htmlFor="outlined-age-native-simple">{label}</InputLabel>
         <Select native value={value} onChange={onChange} label={label}>
           <option aria-label="None" value="" />
@@ -18,7 +28,7 @@ const Dropdown: FC<DropdownProps> = ({ label, value, onChange, options }) => {
           ))}
         </Select>
       </FormControl>
-    </div>
+    </>
   )
 }
 export default Dropdown

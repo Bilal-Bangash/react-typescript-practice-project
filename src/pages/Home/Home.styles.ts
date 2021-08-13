@@ -1,12 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles'
 export const homeStyles = makeStyles(({ palette }) => ({
-  paperStyle: {
+  paper: {
     margin: '50px',
     height: '80vh',
+    padding: '10px',
   },
-  typographyStyle: {
+  typography: {
     // background: palette.secondary.light,
     margin: '50px 0px 100px 0px',
     paddingTop: '50px',
+  },
+  grid: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 }))
