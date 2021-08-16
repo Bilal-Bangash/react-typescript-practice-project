@@ -1,15 +1,17 @@
 import React, { FC, Fragment, useState } from 'react'
 import { AppBar, Toolbar, IconButton, MenuItem, Menu } from '@material-ui/core'
-
-import MenuIcon from '@material-ui/icons/Menu'
-import { appBarStyles } from './AppBar.styles'
+import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import MenuIcon from '@material-ui/icons/Menu'
+import { HOME_ROUTE, SCORECARD_ROUTE } from '../../constants'
+import { appBarStyles } from './AppBar.styles'
 
 export interface MenuAppBarProps {
   handleClick: () => void
 }
 
 const MenuAppBar: FC<MenuAppBarProps> = ({ handleClick }) => {
+  const history = useHistory()
   const userLogin = useSelector((state: any) => state.userLogin)
   const classes = appBarStyles()
   const [auth] = useState(true)
@@ -28,14 +30,34 @@ const MenuAppBar: FC<MenuAppBarProps> = ({ handleClick }) => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
+          <div>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <MenuIcon />
+            </IconButton>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={() => history.push(HOME_ROUTE)}
+            >
+              Home
+            </IconButton>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={() => history.push(SCORECARD_ROUTE)}
+            >
+              Scorecard
+            </IconButton>
+          </div>
           {auth && (
             <Fragment>
               <IconButton

@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 export const typingStyles = makeStyles(({ palette }) => ({
   paper: {
     margin: '50px',
-    height: '80vh',
+    height: '70vh',
     padding: '10px',
     paddingTop: '20px',
   },
