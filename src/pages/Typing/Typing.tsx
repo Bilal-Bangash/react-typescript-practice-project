@@ -8,7 +8,7 @@ interface TypingProps {}
 
 const Typing: FC<TypingProps> = () => {
   const testData = useSelector((state: any) => state.testData)
-  const { paragraph = '' } = testData?.testInfo || ''
+  const { paragraph = '', level = '', time = 0 } = testData?.testInfo || ''
   const classes = typingStyles()
   const [greenArray, setGreenArray] = useState<Array<number>>([])
   const [redArray, setRedArray] = useState<Array<number>>([])
@@ -33,6 +33,21 @@ const Typing: FC<TypingProps> = () => {
         <Paper elevation={3} className={classes.paper}>
           <Grid className={classes.grid} container spacing={2}>
             <Grid item xs={12} md={6} style={{ textAlign: 'left' }}>
+              <Typography
+                component="h6"
+                variant="h5"
+                className={classes.typography}
+              >
+                Level : <i>{level.toUpperCase()}</i>
+              </Typography>
+              <Typography
+                component="h6"
+                variant="h5"
+                className={classes.typography}
+              >
+                Time Limit : <i>{`${time / 60} minutes`}</i>
+              </Typography>
+              <br />
               <Typography
                 component="h6"
                 variant="h5"
@@ -83,6 +98,9 @@ const Typing: FC<TypingProps> = () => {
                 multiline
                 onChange={handleText}
               />
+            </Grid>
+            <Grid item xs={12}>
+              After Test Completion your score will be shown here
             </Grid>
           </Grid>
         </Paper>

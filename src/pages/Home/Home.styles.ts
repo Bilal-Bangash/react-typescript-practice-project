@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 export const homeStyles = makeStyles(({ palette }) => ({
   paper: {
     margin: '50px',
-    height: '80vh',
+    height: '70vh',
     padding: '10px',
   },
   typography: {

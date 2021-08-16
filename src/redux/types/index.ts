@@ -9,3 +9,8 @@ export {
   START_TEST_SUCCESS,
   START_TEST_FAIL,
 } from './startTest.types'
+export {
+  SCORECARD_REQUEST,
+  SCORECARD_SUCCESS,
+  SCORECARD_FAIL,
+} from './scorecard.types'
