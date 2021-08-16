@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   Avatar,
   Button,
@@ -9,22 +9,20 @@ import {
 } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-// import { getCurrentUserAuthenticationStatus } from '../../firebase/authService'
 import { userLogin as userLoginAction } from '../../redux'
 import { signInStyles } from './SignIn.styles'
 import { SignInProps } from './SignIn.interface'
 const SignIn: FC<SignInProps> = () => {
   const classes = signInStyles()
   const dispatch = useDispatch()
+  const userLogin = useSelector((state: any) => state.userLogin)
   const history = useHistory()
-
   useEffect(() => {
-    // getCurrentUserAuthenticationStatus() && history.push('/')
-  }, [history])
+    userLogin?.userInfo && history.push('/')
+  }, [userLogin?.userInfo, history])
 
   const handleSignInClick = () => {
     dispatch(userLoginAction())
-    history.push('/')
   }
 
   return (

@@ -4,3 +4,8 @@ export {
   USER_LOGIN_FAIL,
   USER_LOGOUT,
 } from './userLogin.types'
+export {
+  START_TEST_REQUEST,
+  START_TEST_SUCCESS,
+  START_TEST_FAIL,
+} from './startTest.types'

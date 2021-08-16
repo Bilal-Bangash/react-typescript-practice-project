@@ -11,7 +11,7 @@ export const userLogin = () => async (dispatch: any) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST })
     const { user } = await auth.signInWithPopup(signInWithGoogle())
-    user && localStorage.setItem(IS_USER_AUTHENTICATED, 'true')
+    user && localStorage.setItem(IS_USER_AUTHENTICATED, user.refreshToken)
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: user,
