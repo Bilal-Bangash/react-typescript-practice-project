@@ -10,10 +10,11 @@ export const typingStyles = makeStyles(({ palette }) => ({
     // background: palette.secondary.light,
     // margin: '50px 0px 100px 0px',
     // paddingTop: '50px',
+    textAlign: 'center',
   },
   grid: {
-    display: 'flex',
-    justifyContent: 'center',
+    // display: 'flex',
+    // justifyContent: 'center',
   },
   textAreaAutoSize: {
     width: '-webkit-fill-available',

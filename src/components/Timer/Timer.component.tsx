@@ -3,10 +3,14 @@ import Chip from '@material-ui/core/Chip'
 import { useInterval } from '../../hooks'
 import { TIMER_STARTED, TIMER_STOPPED } from './Timer.constants'
 
-interface TimerProps {}
+interface TimerProps {
+  time: number
+  stop: boolean
+  handleTimeStop: () => void
+}
 
-const Timer: FC<TimerProps> = () => {
-  const [secondsRemaining, setSecondsRemaining] = useState(120)
+const Timer: FC<TimerProps> = ({ time, stop, handleTimeStop }) => {
+  const [secondsRemaining, setSecondsRemaining] = useState(time)
   const [status, setStatus] = useState(TIMER_STOPPED)
 
   const secondsToDisplay = secondsRemaining % 60
@@ -16,14 +20,15 @@ const Timer: FC<TimerProps> = () => {
 
   // testing WIP
   useEffect(() => {
-    setStatus(TIMER_STARTED)
-  }, [])
+    setStatus(stop ? TIMER_STOPPED : TIMER_STARTED)
+  }, [stop])
 
   useInterval(
     () => {
       secondsRemaining > 0
         ? setSecondsRemaining(secondsRemaining - 1)
         : setStatus(TIMER_STOPPED)
+      secondsRemaining === 0 && handleTimeStop()
     },
     status === TIMER_STARTED ? 1000 : null,
     // passing null stops the interval
@@ -35,19 +40,31 @@ const Timer: FC<TimerProps> = () => {
       <Chip
         size="medium"
         label={twoDigits(hoursToDisplay)}
-        color={secondsToDisplay > 20 ? 'primary' : 'secondary'}
+        color={
+          minutesToDisplay > 0 && secondsToDisplay < 20
+            ? 'secondary'
+            : 'primary'
+        }
       />{' '}
       <b>:</b>{' '}
       <Chip
         size="medium"
         label={twoDigits(minutesToDisplay)}
-        color={secondsToDisplay > 20 ? 'primary' : 'secondary'}
+        color={
+          minutesToDisplay > 0 && secondsToDisplay < 20
+            ? 'secondary'
+            : 'primary'
+        }
       />{' '}
       <b>:</b>{' '}
       <Chip
         size="medium"
         label={twoDigits(secondsToDisplay)}
-        color={secondsToDisplay > 20 ? 'primary' : 'secondary'}
+        color={
+          minutesToDisplay > 0 && secondsToDisplay < 20
+            ? 'secondary'
+            : 'primary'
+        }
       />
     </div>
   )
