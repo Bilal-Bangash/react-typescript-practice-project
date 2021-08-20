@@ -1,24 +1,25 @@
 import { Fragment, FC, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Container, Paper, Grid, TextField } from '@material-ui/core'
 import { Timer, Typography, Result } from '../../components'
 import { typingStyles } from './Typing.styles'
+import { saveTestResult } from '../../redux'
 
 interface TypingProps {}
 
 const Typing: FC<TypingProps> = () => {
   const {
     testData: { testInfo: { paragraph = '', level = '', time = 0 } = {} } = {},
-    userLogin: { userInfo: { displayName = '' } = {} } = {},
+    userLogin: { userInfo: { displayName = '', photoURL = '' } = {} } = {},
   } = useSelector((state: any) => state)
-
+  const dispatch = useDispatch()
   const classes = typingStyles()
   const [greenArray, setGreenArray] = useState<Array<number>>([])
   const [redArray, setRedArray] = useState<Array<number>>([])
   const [stop, setStop] = useState<boolean>(false)
 
   const handleText = ({ target: { value = '' } }) => {
-    value === paragraph && setStop(true)
+    value === paragraph && handleTimeStop()
     //while typing inserting each letter that is correct into green array and wrong one in red
     value.charAt(value.length - 1) === paragraph.charAt(value.length - 1)
       ? setGreenArray([...greenArray, value.length - 1])
@@ -31,7 +32,10 @@ const Typing: FC<TypingProps> = () => {
     redArray[redArray.length - 1] > value.length - 1 &&
       setRedArray(redArray.filter((item) => item !== value.length))
   }
-  const handleTimeStop = () => setStop(true)
+  const handleTimeStop = () => {
+    setStop(true)
+    dispatch(saveTestResult(displayName, photoURL))
+  }
   return (
     <Fragment>
       <Container fixed>
@@ -101,17 +105,7 @@ const Typing: FC<TypingProps> = () => {
                   After Test Completion your score will be shown below
                 </Typography>
               ) : (
-                <>
-                  <Typography
-                    component="h5"
-                    variant="h5"
-                    className={classes.typography}
-                  >
-                    Speed Typing Result
-                  </Typography>
-                  <br />
-                  <Result level={level} user={displayName} time={time} />
-                </>
+                <Result level={level} user={displayName} time={time} />
               )}
             </Grid>
           </Grid>
