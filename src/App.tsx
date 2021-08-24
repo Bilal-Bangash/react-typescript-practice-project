@@ -1,5 +1,4 @@
-import { Route, Switch, Redirect } from 'react-router-dom'
-import { useHistory } from 'react-router-dom'
+import { Route, Switch, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Home, SignIn, TypingTest, Scorecard } from './pages'
 import { AppBar } from './components'
@@ -10,6 +9,7 @@ import {
   SCORECARD_ROUTE,
 } from './constants'
 import { userLogout } from './redux'
+import { PrivateRoute } from './routes'
 import './App.css'
 
 function App() {
@@ -26,19 +26,10 @@ function App() {
       {refreshToken && <AppBar handleClick={handleSignOut} />}
       <Switch>
         <Route exact path={SIGN_IN_ROUTE} component={() => <SignIn />} />
-        <Route exact path={HOME_ROUTE} component={Home} />
-        <Route exact path={SCORECARD_ROUTE} component={Scorecard} />
-        {/* Need to add protected Routes */}
-        {refreshToken ? (
-          <Route exact path={TYPING_TEST_ROUTE} component={TypingTest} />
-        ) : (
-          <Redirect from="/" to={SIGN_IN_ROUTE} />
-        )}
-        {refreshToken ? (
-          <Route exact path="/" component={Home} />
-        ) : (
-          <Redirect from="/" to={SIGN_IN_ROUTE} />
-        )}
+        <PrivateRoute exact path="/" component={Home} />
+        <PrivateRoute exact path={HOME_ROUTE} component={Home} />
+        <PrivateRoute exact path={SCORECARD_ROUTE} component={Scorecard} />
+        <PrivateRoute exact path={TYPING_TEST_ROUTE} component={TypingTest} />
       </Switch>
     </div>
   )
