@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ScorecardTable } from '../../components'
+import { ScorecardTable, Loader } from '../../components'
 import { scorecard } from '../../redux'
 
 interface ScorecardProps {}
@@ -12,7 +12,15 @@ const Scorecard: React.FC<ScorecardProps> = () => {
   useEffect(() => {
     dispatch(scorecard())
   }, [dispatch])
-  return <ScorecardTable scorecardData={scorecardData} />
+  return (
+    <>
+      {scorecardData.length ? (
+        <ScorecardTable scorecardData={scorecardData} />
+      ) : (
+        <Loader />
+      )}
+    </>
+  )
 }
 
 export default Scorecard

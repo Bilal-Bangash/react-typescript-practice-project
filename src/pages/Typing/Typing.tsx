@@ -1,7 +1,7 @@
 import { Fragment, FC, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Container, Paper, Grid, TextField } from '@material-ui/core'
-import { Timer, Typography, Result } from '../../components'
+import { TypingHeader, Typography, Result, Loader } from '../../components'
 import { typingStyles } from './Typing.styles'
 import { saveTestResult } from '../../redux'
 
@@ -38,79 +38,66 @@ const Typing: FC<TypingProps> = () => {
   }
   return (
     <Fragment>
-      <Container fixed>
-        <Paper elevation={3} className={classes.paper}>
-          <Grid className={classes.grid} container spacing={2}>
-            <Grid item xs={12} md={9} style={{ textAlign: 'left' }}>
-              <Typography component="h6" variant="h5">
-                Level : <i>{level.toUpperCase()}</i>
-              </Typography>
-              <Typography component="h6" variant="h5">
-                Time Limit : <i>{`${time / 60} minutes`}</i>
-              </Typography>
-              <br />
-              <Typography component="h6" variant="h5">
-                Paragraph to type
-              </Typography>
-            </Grid>
-            {/* @ts-ignore */}
-            <Grid item xs={12} md={3} align="right">
-              <Typography
-                component="h5"
-                variant="h4"
-                className={classes.typography}
-              >
-                Timer
-              </Typography>
-              <Timer time={time} stop={stop} handleTimeStop={handleTimeStop} />
-            </Grid>
-            <Grid item xs={12} className={classes.testParagraph}>
-              <Typography component="p" variant="h6">
-                {/* @ts-ignore */}
-                {paragraph.split('').map((character, index) => (
-                  <span
-                    style={{
-                      background: greenArray.includes(index)
-                        ? 'green'
-                        : redArray.includes(index)
-                        ? 'red'
-                        : 'white',
-                    }}
-                  >
-                    {character}
-                  </span>
-                ))}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Start Typing..."
-                name="notes"
-                variant="outlined"
-                rows={4}
-                disabled={stop}
-                multiline
-                onChange={handleText}
+      {!paragraph && !displayName ? (
+        <Loader />
+      ) : (
+        <Container fixed>
+          <Paper elevation={3} className={classes.paper}>
+            <Grid className={classes.grid} container spacing={2}>
+              <TypingHeader
+                stop={stop}
+                time={time}
+                level={level}
+                handleTimeStop={handleTimeStop}
               />
-            </Grid>
-            {/* @ts-ignore */}
-            <Grid item xs={12} align="center">
-              {!stop ? (
-                <Typography
-                  component="h5"
-                  variant="h4"
-                  className={classes.typography}
-                >
-                  After Test Completion your score will be shown below
+              <Grid item xs={12} className={classes.testParagraph}>
+                <Typography component="p" variant="h6">
+                  {/* @ts-ignore */}
+                  {paragraph.split('').map((character, index) => (
+                    <span
+                      style={{
+                        background: greenArray.includes(index)
+                          ? 'green'
+                          : redArray.includes(index)
+                          ? 'red'
+                          : 'white',
+                      }}
+                    >
+                      {character}
+                    </span>
+                  ))}
                 </Typography>
-              ) : (
-                <Result level={level} user={displayName} time={time} />
-              )}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Start Typing..."
+                  name="notes"
+                  variant="outlined"
+                  rows={4}
+                  disabled={stop}
+                  multiline
+                  onChange={handleText}
+                />
+              </Grid>
+              {/* @ts-ignore */}
+              <Grid item xs={12} align="center">
+                {!stop ? (
+                  <Typography
+                    component="h5"
+                    variant="h4"
+                    className={classes.typography}
+                  >
+                    After Test Completion your score will be shown below
+                  </Typography>
+                ) : (
+                  <Result level={level} user={displayName} time={time} />
+                )}
+              </Grid>
             </Grid>
-          </Grid>
-        </Paper>
-      </Container>
+          </Paper>
+        </Container>
+      )}
     </Fragment>
   )
 }
