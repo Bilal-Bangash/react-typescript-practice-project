@@ -1,3 +1,3 @@
 export { userLoginReducer } from './loginReducer'
-export { testReducer } from './testReducer'
+export { testReducer, saveTestResultReducer } from './testReducer'
 export { scorecardReducer } from './scorecardReducer'

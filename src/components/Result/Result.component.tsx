@@ -1,5 +1,6 @@
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import React from 'react'
+import { resultStyles } from './Result.styles'
 
 interface ResultProps {
   level: string
@@ -8,9 +9,15 @@ interface ResultProps {
 }
 
 const Result: React.FC<ResultProps> = ({ level, user, time }) => {
+  const classes = resultStyles()
   return (
     // @ts-ignore
-    <Grid container spacing={2} align="center">
+    <Grid container spacing={2} align="center" justifyContent="center">
+      <br />
+      <Typography component="h5" variant="h5" className={classes.typography}>
+        Speed Typing Result
+      </Typography>
+      <br />
       <Grid item xs={12}>
         Name: {user}
       </Grid>

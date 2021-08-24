@@ -1,1 +1,7 @@
-export { userLogin, userLogout, startTest, scorecard } from './actions'
+export {
+  userLogin,
+  userLogout,
+  startTest,
+  saveTestResult,
+  scorecard,
+} from './actions'
