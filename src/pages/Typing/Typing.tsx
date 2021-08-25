@@ -30,7 +30,7 @@ const Typing: FC<TypingProps> = () => {
   //   const wordArr = paragraph.split(' ')
   //   setWordsArray(wordArr)
   // }, [paragraph])
-  const handleText = ({ target: { value = '' } }) => {
+  const handleText = ({ target: { value = '' } = {} }) => {
     value === paragraph && handleTimeStop()
     //while typing inserting each letter that is correct into green array and wrong one in red
     if (value.charAt(value.length - 1) === paragraph.charAt(value.length - 1)) {
@@ -80,6 +80,7 @@ const Typing: FC<TypingProps> = () => {
                   {/* @ts-ignore */}
                   {paragraph.split('').map((character, index) => (
                     <span
+                      key={index}
                       style={{
                         background: greenArray.includes(index)
                           ? 'green'
