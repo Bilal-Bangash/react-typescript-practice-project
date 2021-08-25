@@ -10,7 +10,7 @@ import { TableHeader, TableBody } from './components'
 import { scorecardTableStyles } from './ScorecardTable.styles'
 
 interface Column {
-  id: 'name' | 'percentage' | 'score' | 'photoURL'
+  id: 'name' | 'percentage' | 'score' | 'photoURL' | 'accuracy' | 'netWPM'
   label: string
   minWidth?: number
   align?: 'right'
@@ -21,7 +21,8 @@ interface Column {
 const columns: Column[] = [
   { id: 'name', label: 'Name', minWidth: 50 },
   { id: 'photoURL', label: 'Profile', minWidth: 50 },
-  { id: 'score', label: 'Score', minWidth: 100 },
+  { id: 'accuracy', label: 'Accuracy', minWidth: 100 },
+  { id: 'netWPM', label: 'WPM', minWidth: 100 },
 ]
 
 interface ScorecardTableProps {

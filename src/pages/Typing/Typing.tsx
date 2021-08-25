@@ -1,4 +1,4 @@
-import { Fragment, FC, useState, useEffect } from 'react'
+import { Fragment, FC, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Container, Paper, Grid, TextField } from '@material-ui/core'
 import { TypingHeader, Typography, Result, Loader } from '../../components'
@@ -21,6 +21,10 @@ const Typing: FC<TypingProps> = () => {
   const [greenArray, setGreenArray] = useState<Array<number>>([])
   const [redArray, setRedArray] = useState<Array<number>>([])
   const [stop, setStop] = useState<boolean>(false)
+  const [result, setResult] = useState({
+    accuracy: 0,
+    netWPM: 0,
+  })
 
   // useEffect(() => {
   //   const wordArr = paragraph.split(' ')
@@ -49,13 +53,12 @@ const Typing: FC<TypingProps> = () => {
   const handleTimeStop = () => {
     setStop(true)
     // @ts-ignore
-    const timeSpent=(time-parseInt(localStorage.getItem('time-remaining')))/60;
-
+    const timeSpent = (time - parseInt(localStorage.getItem('time-remaining'))) / 60;
     const grossWPM = correctEntries / 5 / timeSpent
     const netWPM = grossWPM - inCorrectEntries / timeSpent
-    const accuracy=(correctEntries/paragraph.length)*100
-    console.log('%cNet WPM', 'color:green; font-size:35px', netWPM,timeSpent,correctEntries,accuracy,paragraph.length)
-    dispatch(saveTestResult(displayName, photoURL))
+    const accuracy = (correctEntries / paragraph.length) * 100
+    setResult({ accuracy, netWPM })
+    dispatch(saveTestResult(displayName, photoURL, accuracy, netWPM))
   }
   return (
     <Fragment>
@@ -112,7 +115,7 @@ const Typing: FC<TypingProps> = () => {
                     After Test Completion your score will be shown below
                   </Typography>
                 ) : (
-                  <Result level={level} user={displayName} time={time} />
+                  <Result level={level} user={displayName} time={time} result={result}/>
                 )}
               </Grid>
             </Grid>
