@@ -28,9 +28,10 @@ const Timer: FC<TimerProps> = ({ time, stop, handleTimeStop }) => {
       secondsRemaining > 0
         ? setSecondsRemaining(secondsRemaining - 1)
         : setStatus(TIMER_STOPPED)
+      localStorage.setItem('time-remaining', secondsRemaining.toString())
       secondsRemaining === 0 && handleTimeStop()
     },
-    status === TIMER_STARTED ? 1000 : null,
+    status === TIMER_STARTED ? 1000 : null
     // passing null stops the interval
   )
   const twoDigits = (num: any) => String(num).padStart(2, '0')

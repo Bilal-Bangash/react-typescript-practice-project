@@ -12,29 +12,54 @@ const Typing: FC<TypingProps> = () => {
     testData: { testInfo: { paragraph = '', level = '', time = 0 } = {} } = {},
     userLogin: { userInfo: { displayName = '', photoURL = '' } = {} } = {},
   } = useSelector((state: any) => state)
+  // const [wordsArray, setWordsArray] = useState<any>([])
   const dispatch = useDispatch()
   const classes = typingStyles()
+
+  const [correctEntries, setCorrectEntries] = useState<number>(0)
+  const [inCorrectEntries, setInCorrectEntries] = useState<number>(0)
   const [greenArray, setGreenArray] = useState<Array<number>>([])
   const [redArray, setRedArray] = useState<Array<number>>([])
   const [stop, setStop] = useState<boolean>(false)
+  const [result, setResult] = useState({
+    accuracy: 0,
+    netWPM: 0,
+  })
 
+  // useEffect(() => {
+  //   const wordArr = paragraph.split(' ')
+  //   setWordsArray(wordArr)
+  // }, [paragraph])
   const handleText = ({ target: { value = '' } }) => {
     value === paragraph && handleTimeStop()
     //while typing inserting each letter that is correct into green array and wrong one in red
-    value.charAt(value.length - 1) === paragraph.charAt(value.length - 1)
-      ? setGreenArray([...greenArray, value.length - 1])
-      : setRedArray([...redArray, value.length - 1])
-
+    if (value.charAt(value.length - 1) === paragraph.charAt(value.length - 1)) {
+      setCorrectEntries(correctEntries + 1)
+      setGreenArray([...greenArray, value.length - 1])
+    } else {
+      setInCorrectEntries(inCorrectEntries + 1)
+      setRedArray([...redArray, value.length - 1])
+    }
     // removing letter from input box when user click backspace
-    greenArray[greenArray.length - 1] > value.length - 1 &&
+    if (greenArray[greenArray.length - 1] > value.length - 1) {
       setGreenArray(greenArray.filter((item) => item !== value.length))
-
-    redArray[redArray.length - 1] > value.length - 1 &&
+      setCorrectEntries(correctEntries - 1)
+    } else if (redArray[redArray.length - 1] > value.length - 1) {
+      setInCorrectEntries(inCorrectEntries - 1)
       setRedArray(redArray.filter((item) => item !== value.length))
+    }
   }
+
   const handleTimeStop = () => {
     setStop(true)
-    dispatch(saveTestResult(displayName, photoURL))
+    const timeSpent =
+      // @ts-ignore
+      (time - parseInt(localStorage.getItem('time-remaining'))) / 60
+    const grossWPM = correctEntries / 5 / timeSpent
+    const netWPM = grossWPM - inCorrectEntries / timeSpent
+    const accuracy = (correctEntries / paragraph.length) * 100
+    setResult({ accuracy, netWPM })
+    dispatch(saveTestResult(displayName, photoURL, level, accuracy, netWPM))
   }
   return (
     <Fragment>
@@ -91,7 +116,12 @@ const Typing: FC<TypingProps> = () => {
                     After Test Completion your score will be shown below
                   </Typography>
                 ) : (
-                  <Result level={level} user={displayName} time={time} />
+                  <Result
+                    level={level}
+                    user={displayName}
+                    time={time}
+                    result={result}
+                  />
                 )}
               </Grid>
             </Grid>

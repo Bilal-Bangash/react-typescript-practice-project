@@ -30,14 +30,24 @@ export const startTest = (selectedLevel: string) => async (dispatch: any) => {
 }
 
 export const saveTestResult =
-  (name: string, photoURL: string) => async (dispatch: any) => {
+  (
+    name: string,
+    photoURL: string,
+    level: string,
+    accuracy: number,
+    netWPM: number
+  ) =>
+  async (dispatch: any) => {
     // work in-progress
     try {
       dispatch({ type: SAVE_TEST_RESULT_REQUEST })
       await fireStore.collection('user-scorecard').add({
         name,
         photoURL,
-        score: '82.5%',
+        level,
+        accuracy,
+        netWPM,
+        score: accuracy,
       })
       dispatch({
         type: SAVE_TEST_RESULT_SUCCESS,

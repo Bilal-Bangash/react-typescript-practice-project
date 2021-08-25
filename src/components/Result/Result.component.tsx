@@ -2,13 +2,23 @@ import { Grid, Typography } from '@material-ui/core'
 import React from 'react'
 import { resultStyles } from './Result.styles'
 
+type resultTypes = {
+  accuracy: number
+  netWPM: number
+}
 interface ResultProps {
   level: string
   user: string
   time: number
+  result: resultTypes
 }
 
-const Result: React.FC<ResultProps> = ({ level, user, time }) => {
+const Result: React.FC<ResultProps> = ({
+  level,
+  user,
+  time,
+  result: { accuracy = 0, netWPM = 0 } = {},
+}) => {
   const classes = resultStyles()
   return (
     // @ts-ignore
@@ -22,13 +32,17 @@ const Result: React.FC<ResultProps> = ({ level, user, time }) => {
         Name: {user}
       </Grid>
       <Grid item xs={12}>
-        Level : {level}
+        Test Level : {level}
       </Grid>
       <Grid item xs={12}>
-        Accuracy: 91%
+        Accuracy: {accuracy} %
       </Grid>
       <Grid item xs={12}>
-        Time Spent : {time} Seconds
+        WPM: {netWPM}
+      </Grid>
+      <Grid item xs={12}>
+        {/* @ts-ignore */}
+        Time Spent : {time - parseInt(localStorage.getItem('time-remaining'))} Seconds
       </Grid>
     </Grid>
   )
