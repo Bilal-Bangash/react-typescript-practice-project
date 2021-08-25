@@ -59,7 +59,7 @@ const Typing: FC<TypingProps> = () => {
     const netWPM = grossWPM - inCorrectEntries / timeSpent
     const accuracy = (correctEntries / paragraph.length) * 100
     setResult({ accuracy, netWPM })
-    dispatch(saveTestResult(displayName, photoURL, accuracy, netWPM))
+    dispatch(saveTestResult(displayName, photoURL, level, accuracy, netWPM))
   }
   return (
     <Fragment>
