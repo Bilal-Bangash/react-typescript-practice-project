@@ -8,12 +8,23 @@ import {
 } from '../types'
 import { testParagraph } from '../../data'
 import { fireStore } from '../../firebase/authService'
+import { RANDOM_PARAGRAPH_URL } from '../../constants'
 
 export const startTest = (selectedLevel: string) => async (dispatch: any) => {
   // work in-progress
   try {
     dispatch({ type: START_TEST_REQUEST })
     const testInfo = testParagraph.find(({ level }) => level === selectedLevel)
+    const resultParagraph = await fetch(
+      RANDOM_PARAGRAPH_URL
+    )
+      .then((response: any) => response.json())
+      .then(
+        (data: any) =>
+          // @ts-ignore
+          (testInfo.paragraph = data?.content)
+      )
+    console.log('this is paragraph', resultParagraph)
     dispatch({
       type: START_TEST_SUCCESS,
       payload: testInfo,
