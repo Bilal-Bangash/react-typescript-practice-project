@@ -41,7 +41,8 @@ const Result: React.FC<ResultProps> = ({
         WPM: {netWPM}
       </Grid>
       <Grid item xs={12}>
-        Time Spent : {time} Seconds
+        {/* @ts-ignore */}
+        Time Spent : {time - parseInt(localStorage.getItem('time-remaining'))} Seconds
       </Grid>
     </Grid>
   )

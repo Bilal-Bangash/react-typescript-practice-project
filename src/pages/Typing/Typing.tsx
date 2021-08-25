@@ -30,30 +30,31 @@ const Typing: FC<TypingProps> = () => {
   //   const wordArr = paragraph.split(' ')
   //   setWordsArray(wordArr)
   // }, [paragraph])
-  // console.log('wordArr', wordsArray)
   const handleText = ({ target: { value = '' } }) => {
     value === paragraph && handleTimeStop()
     //while typing inserting each letter that is correct into green array and wrong one in red
-    value.charAt(value.length - 1) === paragraph.charAt(value.length - 1)
-      ? setCorrectEntries(correctEntries + 1)
-      : setInCorrectEntries(inCorrectEntries + 1)
-
-    value.charAt(value.length - 1) === paragraph.charAt(value.length - 1)
-      ? setGreenArray([...greenArray, value.length - 1])
-      : setRedArray([...redArray, value.length - 1])
-
+    if (value.charAt(value.length - 1) === paragraph.charAt(value.length - 1)) {
+      setCorrectEntries(correctEntries + 1)
+      setGreenArray([...greenArray, value.length - 1])
+    } else {
+      setInCorrectEntries(inCorrectEntries + 1)
+      setRedArray([...redArray, value.length - 1])
+    }
     // removing letter from input box when user click backspace
-    greenArray[greenArray.length - 1] > value.length - 1 &&
+    if (greenArray[greenArray.length - 1] > value.length - 1) {
       setGreenArray(greenArray.filter((item) => item !== value.length))
-
-    redArray[redArray.length - 1] > value.length - 1 &&
+      setCorrectEntries(correctEntries - 1)
+    } else if (redArray[redArray.length - 1] > value.length - 1) {
+      setInCorrectEntries(inCorrectEntries - 1)
       setRedArray(redArray.filter((item) => item !== value.length))
+    }
   }
 
   const handleTimeStop = () => {
     setStop(true)
-    // @ts-ignore
-    const timeSpent = (time - parseInt(localStorage.getItem('time-remaining'))) / 60;
+    const timeSpent =
+      // @ts-ignore
+      (time - parseInt(localStorage.getItem('time-remaining'))) / 60
     const grossWPM = correctEntries / 5 / timeSpent
     const netWPM = grossWPM - inCorrectEntries / timeSpent
     const accuracy = (correctEntries / paragraph.length) * 100
@@ -115,7 +116,12 @@ const Typing: FC<TypingProps> = () => {
                     After Test Completion your score will be shown below
                   </Typography>
                 ) : (
-                  <Result level={level} user={displayName} time={time} result={result}/>
+                  <Result
+                    level={level}
+                    user={displayName}
+                    time={time}
+                    result={result}
+                  />
                 )}
               </Grid>
             </Grid>
