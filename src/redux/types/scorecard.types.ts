@@ -1,0 +1,4 @@
+// Types for scorecard
+export const SCORECARD_REQUEST = 'SCORECARD_REQUEST'
+export const SCORECARD_SUCCESS = 'SCORECARD_SUCCESS'
+export const SCORECARD_FAIL = 'SCORECARD_FAIL'
